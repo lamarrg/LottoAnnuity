@@ -29,11 +29,28 @@ var powerComplete = false
 // should probably put a completion handler on here so updateDate() does not fire until this is complete
 func formatLotterJackpotText(forLottery: LottoChoice) -> String {
     let kerry = NSString(string: "\(forLottery.jackpot)" as String).components(separatedBy: ".")
-  
-        return "\(kerry[0])"
-
+    
+    return "\(kerry[0])"
+    
 }
 
+func calculatePayments(lottery: LottoChoice ) {
+    installmentPayments.removeAll()
+    let payments = 29
+    let initialpayment = lottery.jackpot * lottery.initialPercent
+    var annuityPayment = initialpayment
+    var total = initialpayment
+    installmentPayments.append(String(annuityPayment))
+    
+    for _ in 1...payments {
+        
+        annuityPayment = annuityPayment * lottery.percentIncrease
+        total += annuityPayment
+        installmentPayments.append(String(annuityPayment))
+    }
+    print(">>>\(total)")
+    
+}
 
 func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> Void) {
     
@@ -53,7 +70,7 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
                 if let unwrappedData = data {
                     
                     let dataString = NSString(data: unwrappedData, encoding: String.Encoding.utf8.rawValue)
-                    print(dataString)
+                    //print(dataString)
                     var stringSeparator = lottery.stringSeparator1
                     
                     if let contentArray = dataString?.components(separatedBy: stringSeparator) {
@@ -62,7 +79,7 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
                             
                             stringSeparator = lottery.stringSeparator2
                             
-                            print(contentArray[0])
+                            //print(contentArray[0])
                             
                             let newContentArray = contentArray[1].components(separatedBy: stringSeparator)
                             
@@ -75,7 +92,7 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
                                     MEGA.jackpot = Double(message)!
                                     
                                 }else if lottery.name == "power"{
-                                
+                                    
                                     POWER.jackpot = Double(message)!
                                     
                                 }
@@ -115,8 +132,3 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
     }
     
 }
-
-
-
-
-

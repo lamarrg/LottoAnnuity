@@ -70,21 +70,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //let kerry = NSString(string: "\(MEGA.jackpot)" as String).components(separatedBy: ".")
+        
+        calculatePayments(lottery: MEGA)  // for new calculations
         lotteryJackpot.text = "0"
+        self.lotteryLabel.text = "$0"
         
         self.stepperLabel.text = String(Int(self.stepperControl.value))
-        self.lotteryLabel.text = "$0"
         self.lotteryJackpot.delegate = self
         self.lotteryJackpot.addTarget(self, action: #selector(ViewController.setPaymentText), for: UIControlEvents.editingChanged)
         self.lotteryJackpot.textColor = UIColor.red  //(hue: 0, saturation: 0, brightness: 0, alpha: 0)
         
     }
-
+    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-       // print(lotteryJackpot.text)
+        // print(lotteryJackpot.text)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,15 +95,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
         allPayments = ""
         calcs()
     }
-
+    
     
     func setPaymentText(){
         if lotteryJackpot.text == "" {
             lotteryLabel.text = "$0"
         } else {
             if let oand = Float(lotteryJackpot.text!) {
-            lotteryLabel.text = oand.asLocalCurrency
-            updateData()
+                lotteryLabel.text = oand.asLocalCurrency
+                updateData()
             }
         }
     }
@@ -113,7 +113,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-   
+    
     func calcs(){
         
         let payments = 30
@@ -125,7 +125,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         var totalValue: Double = initialPayment
         var annuityPayment: Double = initialPayment
-
+        
         
         if stepperControl.value > 1 {
             firstPayment = Float(initialPayment * 0.71)/Float(stepperControl.value)
@@ -133,7 +133,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             firstPayment = Float(initialPayment * 0.71)
         }
         
-         allPayments = "Payment 1: \(firstPayment.asLocalCurrency)\n"
+        allPayments = "Payment 1: \(firstPayment.asLocalCurrency)\n"
         
         func calcPayments() {
             for i in 1..<payments {
@@ -145,9 +145,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 } else {
                     printInstallment = Float(annuityPayment * 0.71)
                 }
-
+                
                 currentPayment = " \(self.printInstallment.asLocalCurrency) \n"
-               // print(currentPayment)
+                // print(currentPayment)
                 allPayments = allPayments + currentPayment
                 
                 // append to array
@@ -158,18 +158,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
         calcPayments()
-
-    annuityText.text = allPayments
-    
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-
+        
+        annuityText.text = allPayments
         
     }
-
     
-     func theAlert() {
+    override func viewDidAppear(_ animated: Bool) {
+        
+        
+    }
+    
+    
+    func theAlert() {
         
         let anAlert = UIAlertController(title: "fuck me", message: "now", preferredStyle: .alert)
         let anAction = UIAlertAction(title: "do it", style: .default, handler: nil)
