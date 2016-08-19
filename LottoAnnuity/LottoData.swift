@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 var installmentPayments = [String]()
 
@@ -34,21 +35,22 @@ func formatLotterJackpotText(forLottery: LottoChoice) -> String {
     
 }
 
-func calculatePayments(lottery: LottoChoice ) {
+func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
+    print("!!! stepper value \(stepperValue.value)")
     installmentPayments.removeAll()
     let payments = 29
     let initialpayment = lottery.jackpot * lottery.initialPercent
     var annuityPayment = initialpayment
     var total = initialpayment
-    installmentPayments.append(String(annuityPayment))
+    installmentPayments.append(String(annuityPayment/stepperValue.value))
     
     for _ in 1...payments {
         
         annuityPayment = annuityPayment * lottery.percentIncrease
         total += annuityPayment
-        installmentPayments.append(String(annuityPayment))
+        installmentPayments.append(String(annuityPayment/stepperValue.value))
     }
-    print(">>>\(total)")
+    print(">>>\(installmentPayments)")
     
 }
 
