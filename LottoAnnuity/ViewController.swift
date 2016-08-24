@@ -9,7 +9,6 @@
 import UIKit
 
 
-
 class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var allPayments = ""
@@ -19,7 +18,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     var firstPayment: Float = 0.0
     
     @IBOutlet weak var table: UITableView!
-    
     
     @IBOutlet weak var lotteryLabel: UILabel!
     
@@ -53,11 +51,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 
     override func viewWillAppear(_ animated: Bool) {
         getLotteryJackpotValue(lottery: MEGA) { (result) in
-            //self.updateData()
         }
         
         getLotteryJackpotValue(lottery: POWER) { (result) in
-            //self.updateData()
         }
 
     }
@@ -65,7 +61,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //calculatePayments(lottery: MEGA, stepperValue: stepperControl)  // for new calculations
         lotteryJackpot.text = "0"
         self.lotteryLabel.text = "$0"
         
@@ -78,18 +73,22 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // print(lotteryJackpot.text)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         self.view.endEditing(true)
+        
     }
     
     func updateData(){
-        allPayments = ""
         
+        if manualEntry == true {
+            calculatePaymentsManual(lottery: selectedLottery, stepperValue: stepperControl, manualValue: lotteryJackpot.text!)
+        } else {
         calculatePayments(lottery: selectedLottery, stepperValue: stepperControl)
-        table.reloadData()
+        }
+            table.reloadData()
     }
     
     
@@ -97,9 +96,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         if lotteryJackpot.text == "" {
             lotteryLabel.text = "$0"
         } else {
-            if let oand = Float(lotteryJackpot.text!) {
-                lotteryLabel.text = oand.asLocalCurrency
-                updateData()
+            if let textValue = Float(lotteryJackpot.text!) {
+                lotteryLabel.text = textValue.asLocalCurrency
+            updateData()
             }
         }
     }
@@ -122,7 +121,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         cell.textLabel?.text = "Payment \(indexPath.row+1): \(installmentPayments[indexPath.row])"
         return cell
     }
-    
     
 }
 

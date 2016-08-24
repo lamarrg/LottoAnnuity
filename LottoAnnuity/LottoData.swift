@@ -11,6 +11,8 @@ import UIKit
 
 var installmentPayments = [String]()
 
+var manualEntry = true
+
 extension Float {
     var asLocalCurrency: String{
         let formatter = NumberFormatter()
@@ -37,6 +39,7 @@ var POWER = LottoChoice(name: "power", initialPercent: 0.017830099134, percentIn
 var megaComplete = false
 var powerComplete = false
 
+
 // should probably put a completion handler on here so updateDate() does not fire until this is complete
 func formatLotterJackpotText(forLottery: LottoChoice) -> String {
     let kerry = NSString(string: "\(forLottery.jackpot)" as String).components(separatedBy: ".")
@@ -44,6 +47,7 @@ func formatLotterJackpotText(forLottery: LottoChoice) -> String {
     return "\(kerry[0])"
     
 }
+
 
 func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
     
@@ -60,7 +64,24 @@ func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
         total += annuityPayment
         installmentPayments.append(String(Float(annuityPayment/stepperValue.value).asLocalCurrency))
     }
+}
+
+func calculatePaymentsManual(lottery: LottoChoice, stepperValue: UIStepper, manualValue: String) {
     
+    installmentPayments.removeAll()
+    let payments = 29
+    let initialpayment = Double(manualValue)! * lottery.initialPercent
+    print("%%%manual value is \(manualValue)")
+    var annuityPayment = initialpayment
+    var total = initialpayment
+    installmentPayments.append(String(Float(annuityPayment/stepperValue.value).asLocalCurrency))
+    
+    for _ in 1...payments {
+        
+        annuityPayment = annuityPayment * lottery.percentIncrease
+        total += annuityPayment
+        installmentPayments.append(String(Float(annuityPayment/stepperValue.value).asLocalCurrency))
+    }
 }
 
 func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> Void) {
@@ -109,13 +130,9 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
                                 completion(result: true)
                                 
                             }
-                            
                         }
-                        
                     }
-                    
                 }
-                
             }
             
             if message == "" {
@@ -129,7 +146,6 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
                 //self.resultLabel.text = message
                 
             })
-            
         }
         
         task.resume()
@@ -138,6 +154,5 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
         
         //resultLabel.text = "The weather there couldn't be found. Please try again."
         
-    }
-    
+    } 
 }
