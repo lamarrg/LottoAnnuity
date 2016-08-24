@@ -11,6 +11,16 @@ import UIKit
 
 var installmentPayments = [String]()
 
+extension Float {
+    var asLocalCurrency: String{
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = NSLocale.current
+        formatter.maximumFractionDigits = 0
+        return formatter.string(from: self)!
+    }
+}
+
 struct LottoChoice {
     let name: String
     let initialPercent: Double
@@ -36,21 +46,20 @@ func formatLotterJackpotText(forLottery: LottoChoice) -> String {
 }
 
 func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
-    print("!!! stepper value \(stepperValue.value)")
+    
     installmentPayments.removeAll()
     let payments = 29
     let initialpayment = lottery.jackpot * lottery.initialPercent
     var annuityPayment = initialpayment
     var total = initialpayment
-    installmentPayments.append(String(annuityPayment/stepperValue.value))
+    installmentPayments.append(String(Float(annuityPayment/stepperValue.value).asLocalCurrency))
     
     for _ in 1...payments {
         
         annuityPayment = annuityPayment * lottery.percentIncrease
         total += annuityPayment
-        installmentPayments.append(String(annuityPayment/stepperValue.value))
+        installmentPayments.append(String(Float(annuityPayment/stepperValue.value).asLocalCurrency))
     }
-    print(">>>\(installmentPayments)")
     
 }
 
@@ -92,11 +101,9 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
                                 if lottery.name == "mega" {
                                     
                                     MEGA.jackpot = Double(message)!
-                                    
-                                }else if lottery.name == "power"{
+                                } else if lottery.name == "power"{
                                     
                                     POWER.jackpot = Double(message)!
-                                    
                                 }
                                 
                                 completion(result: true)

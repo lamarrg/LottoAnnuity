@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="30" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKF-Zt-tpa">
-                                <frame key="frameInset" minX="20" minY="130" width="335" height="517"/>
+                                <frame key="frameInset" minX="20" minY="130" width="335" height="135"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -63,8 +63,33 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                             </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8X6-xr-ihb">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="nM2-RY-6KE"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="FSf-YF-vxu">
+                                        <frame key="frameInset" minY="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FSf-YF-vxu" id="aY8-GD-W95">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="DlS-EZ-VMy"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="4uR-Z8-fKa"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8X6-xr-ihb" secondAttribute="bottom" id="Vij-uO-y07"/>
+                            <constraint firstItem="8X6-xr-ihb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="iO3-5T-3YH"/>
+                            <constraint firstAttribute="trailing" secondItem="8X6-xr-ihb" secondAttribute="trailing" id="t6T-1h-MKb"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="annuityText" destination="fKF-Zt-tpa" id="GL2-Rq-Xpk"/>
@@ -73,11 +98,12 @@
                         <outlet property="lotterySelection" destination="zl9-Rb-Nx7" id="OdL-Aj-FCa"/>
                         <outlet property="stepperControl" destination="qgz-4A-TjO" id="tdD-WY-lbw"/>
                         <outlet property="stepperLabel" destination="fsY-ig-aWZ" id="bAt-lL-26u"/>
+                        <outlet property="table" destination="8X6-xr-ihb" id="fnn-Ho-S6Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="439.19999999999999" y="389.05547226386807"/>
+            <point key="canvasLocation" x="439.19999999999999" y="388.15592203898052"/>
         </scene>
     </scenes>
 </document>

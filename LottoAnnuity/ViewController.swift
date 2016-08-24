@@ -8,23 +8,17 @@
 
 import UIKit
 
-extension Float {
-    var asLocalCurrency: String{
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = NSLocale.current
-        formatter.maximumFractionDigits = 0
-        return formatter.string(from: self)!
-    }
-}
 
-class ViewController: UIViewController, UITextFieldDelegate {
+
+class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     var allPayments = ""
     var currentPayment = ""
     var selectedLottery = MEGA
     var printInstallment: Float = 0.0
     var firstPayment: Float = 0.0
+    
+    @IBOutlet weak var table: UITableView!
     
     
     @IBOutlet weak var lotteryLabel: UILabel!
@@ -59,11 +53,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         getLotteryJackpotValue(lottery: MEGA) { (result) in
-            self.updateData()
+            //self.updateData()
         }
         
         getLotteryJackpotValue(lottery: POWER) { (result) in
-            self.updateData()
+            //self.updateData()
         }
 
     }
@@ -71,7 +65,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        calculatePayments(lottery: MEGA, stepperValue: stepperControl)  // for new calculations
+        //calculatePayments(lottery: MEGA, stepperValue: stepperControl)  // for new calculations
         lotteryJackpot.text = "0"
         self.lotteryLabel.text = "$0"
         
@@ -93,8 +87,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func updateData(){
         allPayments = ""
-        calculatePayments(lottery: MEGA, stepperValue: stepperControl)
         
+        calculatePayments(lottery: selectedLottery, stepperValue: stepperControl)
+        table.reloadData()
     }
     
     
@@ -112,6 +107,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return installmentPayments.count
+    
+    }
+    
+    
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
+        cell.textLabel?.text = "Payment \(indexPath.row+1): \(installmentPayments[indexPath.row])"
+        return cell
     }
     
     
