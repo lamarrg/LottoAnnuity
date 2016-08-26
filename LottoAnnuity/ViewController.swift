@@ -45,11 +45,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     @IBOutlet weak var stepperControl: UIStepper!
     
     @IBAction func stepperCount(sender: AnyObject) {
+        // sets how many people the jackpot will be devided between
         stepperLabel.text = String(Int(stepperControl.value))
         updateData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        // pulls current lottery jackpots from website. if not avail, they will default to minimum values
+        
         getLotteryJackpotValue(lottery: MEGA) { (result) in
         }
         
@@ -73,6 +76,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // remove?
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -82,11 +86,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     }
     
     func updateData(){
-        
+        // calls function to calculate the annual payments and then update the tableview
         if manualEntry == true {
             calculatePaymentsManual(lottery: selectedLottery, stepperValue: stepperControl, manualValue: lotteryJackpot.text!)
         } else {
-        calculatePayments(lottery: selectedLottery, stepperValue: stepperControl)
+            calculatePayments(lottery: selectedLottery, stepperValue: stepperControl)
         }
             table.reloadData()
     }

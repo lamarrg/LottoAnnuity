@@ -19,7 +19,8 @@ extension Float {
         formatter.numberStyle = .currency
         formatter.locale = NSLocale.current
         formatter.maximumFractionDigits = 0
-        return formatter.string(from: self)!
+        //return formatter.string(from: NSNumber(self))!
+        return formatter.string(from: self as NSNumber)!
     }
 }
 
@@ -84,7 +85,7 @@ func calculatePaymentsManual(lottery: LottoChoice, stepperValue: UIStepper, manu
     }
 }
 
-func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> Void) {
+func getLotteryJackpotValue(lottery: LottoChoice, completion: @escaping (_ result: Bool) -> Void) {
     
     if let url = URL(string: lottery.jackpotURL) {
         
@@ -127,7 +128,8 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: (result: Bool) -> 
                                     POWER.jackpot = Double(message)!
                                 }
                                 
-                                completion(result: true)
+                                //completion(true)
+                                completion(true)
                                 
                             }
                         }
