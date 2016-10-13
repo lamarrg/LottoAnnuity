@@ -11,7 +11,10 @@ import UIKit
 
 var installmentPayments = [String]()
 
-var manualEntry = true
+
+var manualEntry = true // why is this here?!?! check use on viewcontroller
+
+// extension to create currency display
 
 extension Float {
     var asLocalCurrency: String{
@@ -19,10 +22,11 @@ extension Float {
         formatter.numberStyle = .currency
         formatter.locale = NSLocale.current
         formatter.maximumFractionDigits = 0
-        //return formatter.string(from: NSNumber(self))!
         return formatter.string(from: self as NSNumber)!
     }
 }
+
+// important info for each lottery version
 
 struct LottoChoice {
     let name: String
@@ -34,14 +38,17 @@ struct LottoChoice {
     let stringSeparator2: String
 }
 
+
+// set struct for each lottery
+
 var MEGA = LottoChoice(name: "mega", initialPercent: 0.0150514350803, percentIncrease: 1.05, jackpot: 15000000.0, jackpotURL: "http://www.megamillions.com", stringSeparator1: "<div class=\"home-next-drawing-estimated-jackpot-dollar-amount\">", stringSeparator2: "</div>")
+
 var POWER = LottoChoice(name: "power", initialPercent: 0.017830099134, percentIncrease: 1.04, jackpot: 40000000.0, jackpotURL: "http://www.powerball.com", stringSeparator1: "<h1>$", stringSeparator2: "&nbsp;")
 
-var megaComplete = false
-var powerComplete = false
 
 
-// should probably put a completion handler on here so updateDate() does not fire until this is complete
+// >>>> should probably put a completion handler on here so updateDate() does not fire until this is complete <<<
+
 func formatLotterJackpotText(forLottery: LottoChoice) -> String {
     let kerry = NSString(string: "\(forLottery.jackpot)" as String).components(separatedBy: ".")
     
@@ -50,7 +57,10 @@ func formatLotterJackpotText(forLottery: LottoChoice) -> String {
 }
 
 
+
+
 func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
+    // calculates annuitized payments for mega or power lottery
     
     installmentPayments.removeAll()
     let payments = 29
@@ -67,25 +77,29 @@ func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
     }
 }
 
+
 func calculatePaymentsManual(lottery: LottoChoice, stepperValue: UIStepper, manualValue: String) {
+    // calculates annuitized payments for manually input lottery value. assumes 5% increase.
     
     installmentPayments.removeAll()
     let payments = 29
-    let initialpayment = Double(manualValue)! * lottery.initialPercent
-    print("%%%manual value is \(manualValue)")
+    let initialpayment = Double(manualValue)! * 0.0150514350803
     var annuityPayment = initialpayment
     var total = initialpayment
     installmentPayments.append(String(Float(annuityPayment/stepperValue.value).asLocalCurrency))
     
     for _ in 1...payments {
         
-        annuityPayment = annuityPayment * lottery.percentIncrease
+        annuityPayment = annuityPayment * 1.05
         total += annuityPayment
         installmentPayments.append(String(Float(annuityPayment/stepperValue.value).asLocalCurrency))
     }
 }
 
+
+
 func getLotteryJackpotValue(lottery: LottoChoice, completion: @escaping (_ result: Bool) -> Void) {
+    // retrieves current annuitized lottery value from relevant website, and applies to struct. if unavailable, struct will not update, will display lowest lottery value (default)
     
     if let url = URL(string: lottery.jackpotURL) {
         
@@ -103,7 +117,7 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: @escaping (_ resul
                 if let unwrappedData = data {
                     
                     let dataString = NSString(data: unwrappedData, encoding: String.Encoding.utf8.rawValue)
-                    //print(dataString)
+                   
                     var stringSeparator = lottery.stringSeparator1
                     
                     if let contentArray = dataString?.components(separatedBy: stringSeparator) {
@@ -111,8 +125,6 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: @escaping (_ resul
                         if contentArray.count > 1 {
                             
                             stringSeparator = lottery.stringSeparator2
-                            
-                            //print(contentArray[0])
                             
                             let newContentArray = contentArray[1].components(separatedBy: stringSeparator)
                             
@@ -123,12 +135,13 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: @escaping (_ resul
                                 if lottery.name == "mega" {
                                     
                                     MEGA.jackpot = Double(message)!
+                                    
                                 } else if lottery.name == "power"{
                                     
                                     POWER.jackpot = Double(message)!
+                                    
                                 }
                                 
-                                //completion(true)
                                 completion(true)
                                 
                             }

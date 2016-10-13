@@ -46,12 +46,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     @IBAction func stepperCount(sender: AnyObject) {
         // sets how many people the jackpot will be devided between
+        
         stepperLabel.text = String(Int(stepperControl.value))
         updateData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        // pulls current lottery jackpots from website. if not avail, they will default to minimum values
+        // calls function to retrieve current lottery jackpots from website. if not avail, they will default to minimum values
         
         getLotteryJackpotValue(lottery: MEGA) { (result) in
         }
@@ -64,20 +65,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // sets initial text value
+        
         lotteryJackpot.text = "0"
         self.lotteryLabel.text = "$0"
         
+        // sets text field delegate
         self.stepperLabel.text = String(Int(self.stepperControl.value))
         self.lotteryJackpot.delegate = self
         self.lotteryJackpot.addTarget(self, action: #selector(ViewController.setPaymentText), for: UIControlEvents.editingChanged)
-        self.lotteryJackpot.textColor = UIColor.red  //(hue: 0, saturation: 0, brightness: 0, alpha: 0)
         
     }
     
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // remove?
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -86,7 +86,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     }
     
     func updateData(){
-        // calls function to calculate the annual payments and then update the tableview
+        // calls function to calculate the annual payments and update the tableview
+        
         if manualEntry == true {
             calculatePaymentsManual(lottery: selectedLottery, stepperValue: stepperControl, manualValue: lotteryJackpot.text!)
         } else {
@@ -97,7 +98,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     
     func setPaymentText(){
-        if lotteryJackpot.text == "" {
+        // sets text value for lottery fields
+        
+        if lotteryJackpot.text == "" || lotteryJackpot.text == "0" {
+            lotteryJackpot.text = "0"
             lotteryLabel.text = "$0"
         } else {
             if let textValue = Float(lotteryJackpot.text!) {
@@ -111,6 +115,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         textField.resignFirstResponder()
         return true
     }
+    
+
+//MARK:- TABLEVIEW FUNCTIONS
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
