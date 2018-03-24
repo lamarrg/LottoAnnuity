@@ -20,7 +20,7 @@ extension Float {
     var asLocalCurrency: String{
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = NSLocale.current
+        formatter.locale = Locale.current
         formatter.maximumFractionDigits = 0
         return formatter.string(from: self as NSNumber)!
     }
@@ -49,8 +49,8 @@ var POWER = LottoChoice(name: "power", initialPercent: 0.017830099134, percentIn
 
 // >>>> should probably put a completion handler on here so updateDate() does not fire until this is complete <<<
 
-func formatLotterJackpotText(forLottery: LottoChoice) -> String {
-    let kerry = NSString(string: "\(forLottery.jackpot)" as String).components(separatedBy: ".")
+func formatLotterJackpotText(_ forLottery: LottoChoice) -> String {
+    let kerry = NSString(string: "\(forLottery.jackpot)").components(separatedBy: ".")
     
     return "\(kerry[0])"
     
@@ -59,7 +59,7 @@ func formatLotterJackpotText(forLottery: LottoChoice) -> String {
 
 
 
-func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
+func calculatePayments(_ lottery: LottoChoice, stepperValue: UIStepper ) {
     // calculates annuitized payments for mega or power lottery
     
     installmentPayments.removeAll()
@@ -78,7 +78,7 @@ func calculatePayments(lottery: LottoChoice, stepperValue: UIStepper ) {
 }
 
 
-func calculatePaymentsManual(lottery: LottoChoice, stepperValue: UIStepper, manualValue: String) {
+func calculatePaymentsManual(_ lottery: LottoChoice, stepperValue: UIStepper, manualValue: String) {
     // calculates annuitized payments for manually input lottery value. assumes 5% increase.
     
     installmentPayments.removeAll()
@@ -98,12 +98,15 @@ func calculatePaymentsManual(lottery: LottoChoice, stepperValue: UIStepper, manu
 
 
 
+
+
 func getLotteryJackpotValue(lottery: LottoChoice, completion: @escaping (_ result: Bool) -> Void) {
     // retrieves current annuitized lottery value from relevant website, and applies to struct. if unavailable, struct will not update, will display lowest lottery value (default)
     
-    if let url = URL(string: lottery.jackpotURL) {
+    
+    if let url = NSURL(string: lottery.jackpotURL) {
         
-        let request = NSMutableURLRequest(url: url)
+        let request = NSMutableURLRequest(url: url as URL)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
@@ -111,7 +114,7 @@ func getLotteryJackpotValue(lottery: LottoChoice, completion: @escaping (_ resul
             var message = ""
             
             if error != nil {
-                print(error)
+                print(error!)
             } else {
                 
                 if let unwrappedData = data {

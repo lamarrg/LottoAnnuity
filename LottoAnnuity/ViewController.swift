@@ -27,14 +27,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     @IBOutlet weak var lotterySelection: UISegmentedControl!
     
-    @IBAction func setLottery(sender: AnyObject) {
+    @IBAction func setLottery(_ sender: AnyObject) {
         if lotterySelection.selectedSegmentIndex == 0 {
             selectedLottery = MEGA
-            lotteryJackpot.text = formatLotterJackpotText(forLottery: selectedLottery)
+            lotteryJackpot.text = formatLotterJackpotText(selectedLottery)
             setPaymentText()
         } else {
             selectedLottery = POWER
-            lotteryJackpot.text = formatLotterJackpotText(forLottery: selectedLottery)
+            lotteryJackpot.text = formatLotterJackpotText(selectedLottery)
             setPaymentText()
         }
         updateData()
@@ -44,7 +44,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     
     @IBOutlet weak var stepperControl: UIStepper!
     
-    @IBAction func stepperCount(sender: AnyObject) {
+    @IBAction func stepperCount(_ sender: AnyObject) {
         // sets how many people the jackpot will be devided between
         
         stepperLabel.text = String(Int(stepperControl.value))
@@ -89,9 +89,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         // calls function to calculate the annual payments and update the tableview
         
         if manualEntry == true {
-            calculatePaymentsManual(lottery: selectedLottery, stepperValue: stepperControl, manualValue: lotteryJackpot.text!)
+            calculatePaymentsManual(selectedLottery, stepperValue: stepperControl, manualValue: lotteryJackpot.text!)
         } else {
-            calculatePayments(lottery: selectedLottery, stepperValue: stepperControl)
+            calculatePayments(selectedLottery, stepperValue: stepperControl)
         }
             table.reloadData()
     }
@@ -119,15 +119,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 
 //MARK:- TABLEVIEW FUNCTIONS
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return installmentPayments.count
     
     }
     
     
-    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
         cell.textLabel?.text = "Payment \(indexPath.row+1): \(installmentPayments[indexPath.row])"
         return cell

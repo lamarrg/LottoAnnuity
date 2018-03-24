@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A4D43491DCFD8BB00ACD3A9 /* NumberGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4D43481DCFD8BB00ACD3A9 /* NumberGeneratorViewController.swift */; };
+		2A4D434D1DCFDA1400ACD3A9 /* NumberGeneratorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4D434C1DCFDA1400ACD3A9 /* NumberGeneratorData.swift */; };
 		2A7E8D1D1D60CA6B00A09B94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7E8D1C1D60CA6B00A09B94 /* AppDelegate.swift */; };
 		2A7E8D241D60CA6B00A09B94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A7E8D231D60CA6B00A09B94 /* Assets.xcassets */; };
 		2A7E8D271D60CA6B00A09B94 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7E8D251D60CA6B00A09B94 /* LaunchScreen.storyboard */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A4D43481DCFD8BB00ACD3A9 /* NumberGeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberGeneratorViewController.swift; sourceTree = "<group>"; };
+		2A4D434C1DCFDA1400ACD3A9 /* NumberGeneratorData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NumberGeneratorData.swift; path = ../NumberGeneratorData.swift; sourceTree = "<group>"; };
 		2A7E8D191D60CA6B00A09B94 /* LottoAnnuity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LottoAnnuity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A7E8D1C1D60CA6B00A09B94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A7E8D231D60CA6B00A09B94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,8 +60,10 @@
 		2A7E8D1B1D60CA6B00A09B94 /* LottoAnnuity */ = {
 			isa = PBXGroup;
 			children = (
+				2A4D434C1DCFDA1400ACD3A9 /* NumberGeneratorData.swift */,
 				2A7E8D1C1D60CA6B00A09B94 /* AppDelegate.swift */,
 				2A7E8D321D60CB9000A09B94 /* Main.storyboard */,
+				2A4D43481DCFD8BB00ACD3A9 /* NumberGeneratorViewController.swift */,
 				2A7E8D2E1D60CAAE00A09B94 /* LottoData.swift */,
 				2A7E8D301D60CB6C00A09B94 /* ViewController.swift */,
 				2A7E8D231D60CA6B00A09B94 /* Assets.xcassets */,
@@ -94,12 +100,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Lamar Greene";
 				TargetAttributes = {
 					2A7E8D181D60CA6B00A09B94 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 2H5QQ8S295;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -141,6 +148,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A7E8D2F1D60CAAE00A09B94 /* LottoData.swift in Sources */,
+				2A4D434D1DCFDA1400ACD3A9 /* NumberGeneratorData.swift in Sources */,
+				2A4D43491DCFD8BB00ACD3A9 /* NumberGeneratorViewController.swift in Sources */,
 				2A7E8D311D60CB6C00A09B94 /* ViewController.swift in Sources */,
 				2A7E8D1D1D60CA6B00A09B94 /* AppDelegate.swift in Sources */,
 			);
@@ -178,6 +187,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -200,7 +210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -228,6 +238,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -244,7 +255,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
