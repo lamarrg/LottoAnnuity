@@ -97,7 +97,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     }
     
     
-    func setPaymentText(){
+    @objc func setPaymentText(){
         // sets text value for lottery fields
         
         if lotteryJackpot.text == "" || lotteryJackpot.text == "0" {
